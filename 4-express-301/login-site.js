@@ -54,4 +54,15 @@ app.get("/logout", (req, res, next) => {
   res.redirect("/login");
 });
 
+app.get("/story/:storyId", (req, res, next) => {
+  res.send(`<h1>Story ${req.params.storyId}</h1>`);
+});
+
+app.get("/statement", (req, res, next) => {
+  res.download(
+    path.join(__dirname, "user-statements/statement.png"),
+    "User Statement.png"
+  );
+});
+
 app.listen(3000);
