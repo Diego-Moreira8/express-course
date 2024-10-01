@@ -30,4 +30,20 @@ router.get("/movie/:id", (req, res, next) => {
   });
 });
 
+router.post("/search", (req, res, next) => {
+  const userSearchedTerm = encodeURI(req.body.movieSearch);
+  const cat = req.body.cat;
+  const movieUrl = `${API_BASE_URL}/search/${cat}?query=${userSearchedTerm}&api_key=${API_KEY}`;
+
+  request.get(movieUrl, (error, response, movieData) => {
+    const parsedData = JSON.parse(movieData);
+
+    if (cat === "person") {
+      parsedData.results = parsedData.results[0].known_for;
+    }
+
+    res.render("index", { parsedData: parsedData.results });
+  });
+});
+
 module.exports = router;
