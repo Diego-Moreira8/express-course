@@ -4,10 +4,11 @@ const router = express.Router();
 const request = require("request");
 
 // const API_KEY = process.env.MOVIE_DB_API;
-const API_KEY = "123456789";
 // const API_BASE_URL = "http://api.themoviedb.org/3";
-const API_BASE_URL = "http://localhost:3030";
 // const NOW_PLAYING_URL = `${API_BASE_URL}/movie/now_playing?api_key=${API_KEY}`;
+
+const API_KEY = "123456789";
+const API_BASE_URL = "http://localhost:3030";
 const NOW_PLAYING_URL = `${API_BASE_URL}/most_popular?api_key=${API_KEY}`;
 
 router.use((req, res, next) => {
