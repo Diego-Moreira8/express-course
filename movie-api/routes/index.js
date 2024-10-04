@@ -2,10 +2,6 @@ var express = require("express");
 var router = express.Router();
 const movies = require("../data/movies");
 
-router.get("/", function (req, res, next) {
-  res.render("index", { title: "Index" });
-});
-
 router.get("/most_popular", (req, res, next) => {
   let page = req.query.page;
 
