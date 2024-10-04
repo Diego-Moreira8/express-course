@@ -5,6 +5,12 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
+// ==========PASSPORT==========
+const passportConfig = require("./config");
+const passport = require("passport");
+const GitHubStrategy = require("passport-github").Strategy;
+// ==========PASSPORT==========
+
 const indexRouter = require("./routes/index");
 
 const app = express();
@@ -14,6 +20,18 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.use(helmet({ contentSecurityPolicy: false }));
+
+// ==========PASSPORT==========
+passport.use(
+  new GitHubStrategy(
+    passportConfig,
+    (accessToken, refreshToken, profile, cb) => {
+      console.log(profile);
+    }
+  )
+);
+// ==========PASSPORT==========
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

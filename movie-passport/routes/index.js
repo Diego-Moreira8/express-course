@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 const request = require("request");
+const passport = require("passport");
 
 const API_KEY = process.env.MOVIE_DB_API;
 const API_BASE_URL = "http://api.themoviedb.org/3";
@@ -19,6 +20,8 @@ router.get("/", function (req, res, next) {
     res.render("index", { parsedData: parsedData.results });
   });
 });
+
+router.get("/login", passport.authenticate("github"));
 
 router.get("/movie/:id", (req, res, next) => {
   const thisMovieId = req.params.id;
