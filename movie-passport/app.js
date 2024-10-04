@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const session = require("express-session");
 
 // ==========PASSPORT==========
 const passportConfig = require("./config");
@@ -22,14 +23,33 @@ app.set("view engine", "ejs");
 app.use(helmet({ contentSecurityPolicy: false }));
 
 // ==========PASSPORT==========
+app.use(
+  session({
+    secret: "I Love Express",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 passport.use(
   new GitHubStrategy(
     passportConfig,
     (accessToken, refreshToken, profile, cb) => {
-      console.log(profile);
+      return cb(null, profile);
     }
   )
 );
+
+passport.serializeUser((user, cb) => {
+  cb(null, user);
+});
+
+passport.deserializeUser((user, cb) => {
+  cb(null, user);
+});
 // ==========PASSPORT==========
 
 app.use(logger("dev"));

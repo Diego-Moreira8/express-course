@@ -21,7 +21,19 @@ router.get("/", function (req, res, next) {
   });
 });
 
+router.get("/favorites", (req, res, next) => {
+  res.json(req.user.displayName);
+});
+
 router.get("/login", passport.authenticate("github"));
+
+router.get(
+  "/auth",
+  passport.authenticate("github", {
+    successRedirect: "/",
+    failureRedirect: "/loginFailed",
+  })
+);
 
 router.get("/movie/:id", (req, res, next) => {
   const thisMovieId = req.params.id;
